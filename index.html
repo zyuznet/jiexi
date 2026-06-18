@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>抖音解析</title>
+</head>
+<body>
+    <h3>抖音视频解析</h3>
+    <input type="text" id="url" placeholder="粘贴抖音分享链接" style="width:400px;">
+    <button onclick="parse()">解析</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function parse() {
+            const url = document.getElementById('url').value.trim();
+            if (!url) return alert('请输入链接');
+            const api = `https://dy.hhna.dpdns.org/?url=${encodeURIComponent(url)}&data=true`;
+            try {
+                const res = await fetch(api);
+                const data = await res.json();
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                document.getElementById('result').textContent = '请求失败: ' + e.message;
+            }
+        }
+    </script>
+</body>
+</html>
